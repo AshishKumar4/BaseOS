@@ -1,6 +1,7 @@
 #include <sys/screen.h>
 #include <sys/x86/idt.h>
 #include <sys/x86/ports.h>
+#include<init_interrupts.c>
 
 extern void_callback_arg_t interruptHandlers[];
 

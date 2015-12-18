@@ -23,12 +23,6 @@ void Pixel_VESA_BUFF(int x, int y, int C1,int C2, int C3)
   /*calculates the offset for a specific point on screen*/
     int offset = x * (depthVESA / 8) + y * (widthVESA * (depthVESA / 8));
 
-    //buffer1[offset] = C1;           //BLUE
-   // buffer2[offset] = C2;    //GREEN
-    //buffer3[offset] = C3;   //RED
-  /*vga_mem[offset + 0] = C1 & 0xff;           //BLUE
-  vga_mem[offset + 1] = C2 & 0xff;    //GREEN
-  vga_mem[offset + 2] = C3 & 0xff;   //RED*/
     buff[offset+1]=C1& 0xff;
     buff[offset+2]=C2& 0xff;
     buff[offset+3]=C3& 0xff;
@@ -70,12 +64,12 @@ void DBuff()
             vga_mem[offset + 0] = buff[offset];
             //buff[offset]=vga_mem[offset];
         }
-        if(buff[offset+1]!=vga_mem[offset+1])           //BLUE
+        if(buff[offset+1]!=vga_mem[offset+1])
         {
             vga_mem[offset + 1] = buff[offset+1];
             //buff[offset]=vga_mem[offset];
         }
-        if(buff[offset+2]!=vga_mem[offset+2])   //GREEN
+        if(buff[offset+2]!=vga_mem[offset+2])
         {
             vga_mem[offset + 2] = buff[offset+2];
            // buff[offset]=vga_mem[offset];
@@ -90,7 +84,7 @@ void RectL(int x, int y, int width, int height, int C1,int C2, int C3)
 }
 void Creater(int i)
 {
-    Pixel_VESA_BUFF(i,i,1000,1000,1000);
+   // Pixel_VESA_BUFF(i,i,1000,1000,1000);
 }
 
 //the vga identifiers

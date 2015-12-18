@@ -12,10 +12,6 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
-extern unsigned char inportb(unsigned short _port);
-/* main.c ** end */
-
-
 /* gdt.c */
 extern void gdt_set_gate(int num, unsigned long base, unsigned long limit, unsigned char access, unsigned char gran);
 
@@ -67,16 +63,6 @@ void irq_uninstall_handler(int irq);
 // sets a gate in the IDT
 void idt_set_gate(unsigned char num, unsigned long base, unsigned short sel, unsigned char flags);
 
-// port out
-void outportb( short port, char dat );
-void outportw( short port, short dat );
-void outportl( short port, int dat );
-
-// port in
-short inportw( short port );
-int inportl( short port );
-
-// CR register manipulation
 unsigned int read_cr0();
 void write_cr0( unsigned int cr0 );
 

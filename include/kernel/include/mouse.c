@@ -44,6 +44,7 @@ void mouse_write(unsigned char a_write)
  mouse_wait(0);
  return inb(0x60);
  }
+ void mouse_handler();
  void mouseinit()
 {
     mouse_wait(1);
@@ -61,15 +62,14 @@ void mouse_write(unsigned char a_write)
     mouse_read();
     mouse_write(0xF4);
     mouse_read();
-    MOUSE_HANDLE->int_no=12;
-    mouse_handler(MOUSE_HANDLE);
-    irqHandler(MOUSE_HANDLE);
+    interruptHandlerRegister(12,&mouse_handler);
 }
-int x=0,y=0;
- void mouse_handler(struct regs *r)
+int x=500,y=500;
+ void mouse_handler()
 {
   static unsigned char cycle = 0;
   static char mouse_bytes[3];
+  while(cycle<3)
   mouse_bytes[cycle++] = inb(0x60);
 
   if (cycle == 3) { // if we have all the 3 bytes...
@@ -82,12 +82,17 @@ int x=0,y=0;
     if (!(mouse_bytes[0] & 0x10))
       x |= 0xFFFFFF00; //delta-x is a negative value
     if (mouse_bytes[0] & 0x4)
-      RectD(100,100,100,100,1000,1000,1000);
+      RectD(100,100,100,100,000,100,1000);
     if (mouse_bytes[0] & 0x2)
       RectD(100,100,100,100,1000,1000,1000);
     if (mouse_bytes[0] & 0x1)
-      RectD(100,100,100,100,1000,1000,1000);
-    // do what you want here, just replace the puts's to execute an action for each button
-    // to use the coordinate data, use mouse_bytes[1] for delta-x, and mouse_bytes[2] for delta-y
+      RectD(100,100,100,100,1000,90,1000);
+    if(mouse_bytes[1]>=1||mouse_bytes>=1)
+        RectD(50,50,50,50,1000,1000,90);
+    x+=mouse_bytes[1];
+    y+=mouse_bytes[2];
+    Pixel_VESA(x,y,500,500,500);
+    Pixel_VESA(x+100,y+100,90,500,1000);
+   // WriteText(mouse_bytes[0],100,200,1000,0);
   }
 }

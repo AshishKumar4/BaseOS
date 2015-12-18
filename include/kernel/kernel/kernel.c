@@ -14,7 +14,8 @@ void kernel_early(void)
     printf("Heap Initialized! \n");
     gdtInit();
     printf("GDT Initialized \n");
-    idtInit();
+    init_interrupts();
+
     printf("IDT Initialized \n");
     picInit(0x20, 0xA0);
     printf("PIC Initialized \n");
@@ -22,6 +23,7 @@ void kernel_early(void)
     printf("Mouse Initialized \n");
     printf("Initializing VESA GUI Mode 1024 x 768 32000^3 colors");
     setVesa(0x117);
+    mouseinit();
 }
 void kernel_start(void)
 {
@@ -33,11 +35,13 @@ void kernel_main(void)
     while(1)
     {
         Creater(i);
-        mouse_handler(MOUSE_HANDLE);
+        mouse_handler();
+       // irqHandler(mouse_handler);
         i+=1;
         RectD(500,400,13,100,1000,1000,1000);
         RectD(200,400,13,100,1000,1000,1000);
         DBuff();
     }
+  //  printf("Hello world");
 }
 
